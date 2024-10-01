@@ -16,11 +16,6 @@ const userSchema = mongoose.Schema({
         required:[true,"Password is required"],
         minlength:6,
     },
-    // confirmpassword:{
-    //     type:String,
-    //     required:[false,"Password and Confirm Password should match"],
-    //     minlength:6,
-    // },
     gender:{
         type:String,
         required:true,
