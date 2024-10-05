@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
 import GenderCheckbox from "./Gender.jsx"
 import { useState } from "react"
+import useRegister from "../../hooks/useRegister.js"
 
 const register = () => {
     const [inputs,setInputs] =useState({
@@ -11,13 +12,15 @@ const register = () => {
         gender:'',
     })
 
+    const{loading, Register}= useRegister();
+
     const handleCheckboxChange =(gender) => {
         setInputs({...inputs, gender}); 
     }
 
-    const handleSubmit =(e) =>{
+    const handleSubmit = async (e) =>{
         e.preventDefault();
-        console.log(inputs);
+        await Register(inputs);
     }
   return (
     <div className ="flex flex-col items-center justify-center min-w-96 mx">
