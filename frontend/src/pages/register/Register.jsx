@@ -12,14 +12,14 @@ const register = () => {
         gender:'',
     })
 
-    const{loading, Register}= useRegister();
+    const{loading, Register} = useRegister();
 
-    const handleCheckboxChange =(gender) => {
+    const handleCheckboxChange = (gender) => {
         setInputs({...inputs, gender}); 
     }
 
     const handleSubmit = async (e) =>{
-        e.preventDefault();
+        e.preventDefault();       
         await Register(inputs);
     }
   return (
@@ -75,13 +75,18 @@ const register = () => {
                     className="w-full input input-bordered h-10"></input>
                 </div>
 
-                <GenderCheckbox onCheckboxChange = {handleCheckboxChange} selectedGender={inputs.gender}/>
+                <GenderCheckbox
+                onCheckboxChange={handleCheckboxChange}
+                selectedGender={inputs.gender}
+                />
 
                 <Link to="/Login" className="hover:underline hover:text-blue-600 mt-2 inline-block text-sm" >
                     Already have an account?
                 </Link>
                 <div>
-                    <button className="btn bg-yellow-900 btn-block btn-sm mt-2 " >Register</button>
+                    <button className="btn bg-yellow-900 btn-block btn-sm mt-2 " disabled={loading}>
+                        {loading ? <span className="loading loading-spinner"></span> : "Register"}
+                    </button>
                 </div>
             </form>
         </div>

@@ -4,22 +4,22 @@ import Message from "../models/message.model.js";
 export const sendMessage = async(req,res) => {
     try{
         const {message} = req.body;
-        const { id : recieverId} = req.params;
+        const { id : receiverId} = req.params;
         const senderId = req.user._id;
 
-        let conversation = await Conversation .findOne({
-            participants:{$all:[senderId, recieverId]},
+        let conversation = await Conversation.findOne({
+            participants:{$all:[senderId, receiverId]},
         })
 
         if(!conversation) {
             conversation = await Conversation.create({
-                participants:[senderId, recieverId],
+                participants:[senderId, receiverId],
             })
         }
 
         const newMessage = new Message({
             senderId,
-            recieverId,
+            receiverId,
             message,
         })
 
@@ -29,17 +29,14 @@ export const sendMessage = async(req,res) => {
 
         // socket.io functionalitywill come here
 
-        // await conversation.save();
-        // await newMessage.save();
-
         //it runs both sunctions parallelly
-        await promise.all([conversation.save(), newMessage.save()]);
+        await Promise.all([conversation.save(), newMessage.save()]);
 
         res.status(201).json({newMessage});
     }
     catch(err){
         console.log("Error in sendMessage controller",err.message);
-        return res.status(500).json({err:"Internal Server Error"});
+        return res.status(500).json({error:"Internal Server Error"});
     }
 };
 

@@ -37,7 +37,7 @@ export const register = async (req,res) => {
             await generateTokenAndSetCookie(newUser._id,res);
             await newUser.save();
 
-            res.status(201).json({message:"Registered Successfully",
+            res.status(201).json({
                 _id: newUser._id,
                 fullName: newUser.fullName,
                 username: newUser.username,
@@ -55,22 +55,28 @@ export const register = async (req,res) => {
 };
 
 
-export const login= async (req,res) => {
+export const login = async (req,res) => {
 
     try{
-        const {username,password}= req.body;
+        const { username, password }= req.body;
         const user = await User.findOne({username});
         const isPasswordCorrect = await bcrypt.compare(password,user?.password || "");
-        if(user){
-            if(!user || !isPasswordCorrect){
-                return res.status(400).json({error:"Invalid Credentials"})
+        if( user ){
+            if(!isPasswordCorrect){
+                return res.status(400).json({err:"Invalid password !"})
+            }
+            if(!user){
+                return res.status(400).json({err:"Invalid username !"})
             }
         }
         else{
+            if(username === ""){
+                return res.status(400).json({err:"Enter credentials !"})
+            }
             return res.status(400).json({err:"This Username doesn't exists"})
         }
 
-        generateTokenAndSetCookie(user._id,res);
+        generateTokenAndSetCookie(user._id, res);
 
         res.status(200).json({message:"Logged In Successfully",
             _id:user._id,

@@ -1,6 +1,9 @@
 import Message from './Message.jsx'
-import '../../index.css';
+import useGetMessages from '../../hooks/useGetMessages.js';
+
 const Messages = () => {
+  const {messages, loading } = useGetMessages();
+  console.log(messages);
   return (
     <div className='px-4 flex-1  overflow-auto '>
         <div className='text-sm text-center content-around bg-yellow-100 rounded-md text-gray-500 font-mono mb-4 mt-2 '>
@@ -11,12 +14,7 @@ const Messages = () => {
         <Message/>
         <Message/>
         <Message/>
-        <Message/>
-        <Message/>
-        <Message/>
-        <Message/>
-        <Message/>
-        <Message/>
+
     </div>
   )
 }
