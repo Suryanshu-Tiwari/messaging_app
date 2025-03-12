@@ -6,7 +6,6 @@ const useGetConversations = () => {
     const [conversations, setConversations] = useState([]);
 
     useEffect( () => {
-
         const getConversations = async () => {
             setLoading(true);
         try {
@@ -15,7 +14,7 @@ const useGetConversations = () => {
             if(data.error) {
                 throw new Error(data.error);
             }
-            setConversations(data)
+            setConversations(data);
         }
         catch(err){
             toast.error(err.message);
@@ -28,5 +27,4 @@ const useGetConversations = () => {
     },[]);
     return {loading, conversations};
 }
-
 export default useGetConversations

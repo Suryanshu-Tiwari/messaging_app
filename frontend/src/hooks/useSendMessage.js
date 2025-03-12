@@ -1,6 +1,6 @@
-import { useState } from 'react'
-import useConversation from '../zustand/useConversation.js'
-import toast from 'react-hot-toast'
+import { useState } from 'react';
+import useConversation from "../zustand/useConversation.js";
+import toast from 'react-hot-toast';
 
 const useSendMessage = () => {
     const [loading, setLoading] = useState(false);
@@ -26,10 +26,10 @@ const useSendMessage = () => {
             toast.error(err.message);
         }
         finally {
-            setLoading(false)
+            setLoading(false);
         }
     }
     return {sendMessage, loading}
 }
 
-export default useSendMessage
+export default useSendMessage;
